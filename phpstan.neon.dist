@@ -1,0 +1,25 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+
+    reportUnmatchedIgnoredErrors: true
+
+    ignoreErrors:
+        # Trait is used in test fixtures, not analyzed in src/
+        -
+            message: '#Trait .* is used zero times and is not analysed#'
+            path: src/Concerns/HasStates.php
+        # Laravel HasFactory trait generic type specification is not critical
+        -
+            message: '#uses generic trait .* but does not specify its types: TFactory#'
+            paths:
+                - src/Database/Models/State.php
+                - src/Database/Models/StateTransition.php
+        # Return type inferred from extending Builder<TModel>
+        -
+            message: '#Method .* return type with generic class .* does not specify its types: TModel#'
+            path: src/Database/Models/State.php

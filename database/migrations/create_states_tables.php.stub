@@ -1,0 +1,112 @@
+<?php declare(strict_types=1);
+
+use Cline\VariableKeys\Enums\MorphType;
+use Cline\VariableKeys\Enums\PrimaryKeyType;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+use function config;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        $primaryKeyType = PrimaryKeyType::tryFrom(config('states.primary_key_type', 'id')) ?? PrimaryKeyType::ID;
+        $contextMorphType = MorphType::tryFrom(config('states.context_morph_type', 'string')) ?? MorphType::String;
+        $boundaryMorphType = MorphType::tryFrom(config('states.boundary_morph_type', 'string')) ?? MorphType::String;
+        $actorMorphType = MorphType::tryFrom(config('states.actor_morph_type', 'string')) ?? MorphType::String;
+
+        Schema::create('states', function (Blueprint $table) use ($primaryKeyType, $contextMorphType, $boundaryMorphType): void {
+            match ($primaryKeyType) {
+                PrimaryKeyType::ULID => $table->ulid('id')->primary(),
+                PrimaryKeyType::UUID => $table->uuid('id')->primary(),
+                PrimaryKeyType::ID => $table->id(),
+            };
+
+            // Context identification (what has the state)
+            $table->string('context_type', 128);
+            match ($contextMorphType) {
+                MorphType::ULID => $table->ulid('context_id'),
+                MorphType::UUID => $table->uuid('context_id'),
+                MorphType::Numeric => $table->unsignedBigInteger('context_id'),
+                MorphType::String => $table->unsignedBigInteger('context_id'),
+            };
+            $table->index(['context_type', 'context_id']);
+
+            // State identification
+            $table->string('namespace', 128)->nullable(); // Optional: 'payment', 'dispute'
+            $table->string('name', 128); // 'paid', 'reclamated', 'corrected'
+            $table->string('environment', 128)->default('default'); // 'production', 'test', 'apply'
+            $table->index(['context_type', 'context_id', 'namespace', 'environment']);
+
+            // Boundary/scope (like Warden - team, organization, etc.)
+            $table->string('boundary_type', 128)->nullable();
+            match ($boundaryMorphType) {
+                MorphType::ULID => $table->ulid('boundary_id')->nullable(),
+                MorphType::UUID => $table->uuid('boundary_id')->nullable(),
+                MorphType::Numeric => $table->unsignedBigInteger('boundary_id')->nullable(),
+                MorphType::String => $table->unsignedBigInteger('boundary_id')->nullable(),
+            };
+            $table->index(['boundary_type', 'boundary_id']);
+
+            // Additional state data
+            $table->json('data')->nullable();
+
+            $table->timestamps();
+
+            // Unique constraint: one state per namespace/name/environment/boundary combo
+            $table->unique([
+                'context_type',
+                'context_id',
+                'namespace',
+                'name',
+                'environment',
+                'boundary_type',
+                'boundary_id',
+            ], 'states_unique_context_state');
+        });
+
+        Schema::create('state_transitions', function (Blueprint $table) use ($primaryKeyType, $actorMorphType): void {
+            match ($primaryKeyType) {
+                PrimaryKeyType::ULID => $table->ulid('id')->primary(),
+                PrimaryKeyType::UUID => $table->uuid('id')->primary(),
+                PrimaryKeyType::ID => $table->id(),
+            };
+
+            // Link to state
+            match ($primaryKeyType) {
+                PrimaryKeyType::ULID => $table->foreignUlid('state_id')->constrained()->cascadeOnDelete(),
+                PrimaryKeyType::UUID => $table->foreignUuid('state_id')->constrained()->cascadeOnDelete(),
+                PrimaryKeyType::ID => $table->foreignId('state_id')->constrained()->cascadeOnDelete(),
+            };
+
+            // Transition details
+            $table->string('from_state', 128)->nullable(); // Null for initial state
+            $table->string('to_state', 128);
+
+            // Actor (who triggered the transition)
+            $table->string('actor_type', 128)->nullable();
+            match ($actorMorphType) {
+                MorphType::ULID => $table->ulid('actor_id')->nullable(),
+                MorphType::UUID => $table->uuid('actor_id')->nullable(),
+                MorphType::Numeric => $table->unsignedBigInteger('actor_id')->nullable(),
+                MorphType::String => $table->unsignedBigInteger('actor_id')->nullable(),
+            };
+            $table->index(['actor_type', 'actor_id']);
+
+            // Transition context
+            $table->string('reason')->nullable();
+            $table->json('metadata')->nullable();
+
+            $table->timestamp('created_at');
+            $table->index(['state_id', 'created_at']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('state_transitions');
+        Schema::dropIfExists('states');
+    }
+};
