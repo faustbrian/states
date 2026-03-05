@@ -9,6 +9,9 @@
 
 namespace Cline\States\Exceptions;
 
+use Facade\IgnitionContracts\BaseSolution;
+use Facade\IgnitionContracts\ProvidesSolution;
+use Facade\IgnitionContracts\Solution;
 use RuntimeException;
 
 /**
@@ -16,4 +19,17 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class InvalidTransitionException extends RuntimeException implements StatesException {}
+abstract class InvalidTransitionException extends RuntimeException implements ProvidesSolution, StatesException
+{
+    public function getSolution(): Solution
+    {
+        /** @var BaseSolution $solution */
+        $solution = BaseSolution::create('Review package usage and configuration.');
+
+        return $solution
+            ->setSolutionDescription('Exception: '.$this->getMessage())
+            ->setDocumentationLinks([
+                'Package documentation' => 'https://github.com/cline/states',
+            ]);
+    }
+}
