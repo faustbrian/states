@@ -1,13 +1,15 @@
 ## Table of Contents
 
-1. Getting Started (`docs/README.md`)
-2. Basic Usage (`docs/basic-usage.md`)
-3. Contexts and Boundaries (`docs/contexts-and-boundaries.md`)
-4. Environments (`docs/environments.md`)
-5. Transition History (`docs/transition-history.md`)
-6. State Machines (`docs/state-machines.md`)
-7. Advanced Usage (`docs/advanced-usage.md`)
-8. Configuration (`docs/configuration.md`)
+1. [Getting Started](#doc-docs-readme) (`docs/README.md`)
+2. [Basic Usage](#doc-docs-basic-usage) (`docs/basic-usage.md`)
+3. [Contexts and Boundaries](#doc-docs-contexts-and-boundaries) (`docs/contexts-and-boundaries.md`)
+4. [Environments](#doc-docs-environments) (`docs/environments.md`)
+5. [Transition History](#doc-docs-transition-history) (`docs/transition-history.md`)
+6. [State Machines](#doc-docs-state-machines) (`docs/state-machines.md`)
+7. [Advanced Usage](#doc-docs-advanced-usage) (`docs/advanced-usage.md`)
+8. [Configuration](#doc-docs-configuration) (`docs/configuration.md`)
+<a id="doc-docs-readme"></a>
+
 A flexible state management package for Laravel that allows any model or object to have multiple states with full transition history, context isolation, and environment support.
 
 ## Requirements
@@ -202,6 +204,8 @@ Container::getInstance()->singleton(StateManager::class, function () {
 ```
 
 You can now inject `StateManager` into any class that needs it.
+
+<a id="doc-docs-basic-usage"></a>
 
 # Basic Usage
 
@@ -588,10 +592,12 @@ States::for($user)->assign('active', [
 
 ## Next Steps
 
-- [Contexts and Boundaries](contexts-and-boundaries.md) - Scope states to specific contexts
-- [Environments](environments.md) - Separate states across environments
-- [Transition History](transition-history.md) - Track and analyze state changes
-- [State Machines](state-machines.md) - Validate allowed transitions
+- [Contexts and Boundaries](#doc-docs-contexts-and-boundaries) - Scope states to specific contexts
+- [Environments](#doc-docs-environments) - Separate states across environments
+- [Transition History](#doc-docs-transition-history) - Track and analyze state changes
+- [State Machines](#doc-docs-state-machines) - Validate allowed transitions
+
+<a id="doc-docs-contexts-and-boundaries"></a>
 
 # Contexts and Boundaries
 
@@ -901,9 +907,11 @@ class TeamObserver
 
 ## Next Steps
 
-- [Environments](environments.md) - Separate states across environments
-- [Transition History](transition-history.md) - Track changes with full context
-- [Advanced Usage](advanced-usage.md) - Complex patterns and queries
+- [Environments](#doc-docs-environments) - Separate states across environments
+- [Transition History](#doc-docs-transition-history) - Track changes with full context
+- [Advanced Usage](#doc-docs-advanced-usage) - Complex patterns and queries
+
+<a id="doc-docs-environments"></a>
 
 # Environments
 
@@ -1259,9 +1267,11 @@ State::query()
 
 ## Next Steps
 
-- [Transition History](transition-history.md) - Track changes per environment
-- [State Machines](state-machines.md) - Validate transitions per environment
-- [Advanced Usage](advanced-usage.md) - Complex multi-environment patterns
+- [Transition History](#doc-docs-transition-history) - Track changes per environment
+- [State Machines](#doc-docs-state-machines) - Validate transitions per environment
+- [Advanced Usage](#doc-docs-advanced-usage) - Complex multi-environment patterns
+
+<a id="doc-docs-transition-history"></a>
 
 # Transition History
 
@@ -1683,9 +1693,11 @@ States::for($user)->transition('active', 'deleted');
 
 ## Next Steps
 
-- [State Machines](state-machines.md) - Validate transitions before recording
-- [Advanced Usage](advanced-usage.md) - Complex transition patterns
-- [Configuration](configuration.md) - Configure transition tracking
+- [State Machines](#doc-docs-state-machines) - Validate transitions before recording
+- [Advanced Usage](#doc-docs-advanced-usage) - Complex transition patterns
+- [Configuration](#doc-docs-configuration) - Configure transition tracking
+
+<a id="doc-docs-state-machines"></a>
 
 # State Machines
 
@@ -2093,8 +2105,10 @@ Enable fixing mistakes:
 
 ## Next Steps
 
-- [Advanced Usage](advanced-usage.md) - Complex workflows and patterns
-- [Configuration](configuration.md) - All configuration options
+- [Advanced Usage](#doc-docs-advanced-usage) - Complex workflows and patterns
+- [Configuration](#doc-docs-configuration) - All configuration options
+
+<a id="doc-docs-advanced-usage"></a>
 
 # Advanced Usage
 
@@ -2601,8 +2615,10 @@ StateAssertions::assertHasStates($user, ['active', 'verified']);
 
 ## Next Steps
 
-- [Configuration](configuration.md) - All configuration options
+- [Configuration](#doc-docs-configuration) - All configuration options
 - Review the [test suite](../tests/) for more examples
+
+<a id="doc-docs-configuration"></a>
 
 # Configuration
 
@@ -2664,7 +2680,7 @@ Define allowed state transitions for each context type:
 ],
 ```
 
-See [State Machines](state-machines.md) for detailed usage.
+See [State Machines](#doc-docs-state-machines) for detailed usage.
 
 ### Default Environment
 
@@ -2689,7 +2705,7 @@ States::for($user, environment: config('states.default_environment'))
 STATES_DEFAULT_ENVIRONMENT=production
 ```
 
-See [Environments](environments.md) for detailed usage.
+See [Environments](#doc-docs-environments) for detailed usage.
 
 ### Primary Key Type
 
@@ -3018,6 +3034,6 @@ Schema::table('states', function (Blueprint $table) {
 
 ## Next Steps
 
-- [Basic Usage](basic-usage.md) - Start using states
-- [State Machines](state-machines.md) - Configure workflow validation
-- [Advanced Usage](advanced-usage.md) - Complex patterns and techniques
+- [Basic Usage](#doc-docs-basic-usage) - Start using states
+- [State Machines](#doc-docs-state-machines) - Configure workflow validation
+- [Advanced Usage](#doc-docs-advanced-usage) - Complex patterns and techniques

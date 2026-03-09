@@ -65,14 +65,14 @@ $states = States::getStates($user);
 
 ## Documentation
 
-- **[Getting Started](docs/README.md)** - Installation, configuration, and quick start
-- **[Basic Usage](docs/basic-usage.md)** - Assigning, transitioning, and removing states
-- **[Contexts and Boundaries](docs/contexts-and-boundaries.md)** - Scoping states to specific contexts
-- **[Environments](docs/environments.md)** - Managing states across different environments
-- **[Transition History](docs/transition-history.md)** - Tracking and querying state changes
-- **[State Machines](docs/state-machines.md)** - Validating allowed transitions
-- **[Advanced Usage](docs/advanced-usage.md)** - Events, metadata, and advanced patterns
-- **[Configuration](docs/configuration.md)** - Advanced configuration options
+- **[Getting Started](DOCS.md#doc-docs-readme)** - Installation, configuration, and quick start
+- **[Basic Usage](DOCS.md#doc-docs-basic-usage)** - Assigning, transitioning, and removing states
+- **[Contexts and Boundaries](DOCS.md#doc-docs-contexts-and-boundaries)** - Scoping states to specific contexts
+- **[Environments](DOCS.md#doc-docs-environments)** - Managing states across different environments
+- **[Transition History](DOCS.md#doc-docs-transition-history)** - Tracking and querying state changes
+- **[State Machines](DOCS.md#doc-docs-state-machines)** - Validating allowed transitions
+- **[Advanced Usage](DOCS.md#doc-docs-advanced-usage)** - Events, metadata, and advanced patterns
+- **[Configuration](DOCS.md#doc-docs-configuration)** - Advanced configuration options
 
 ## Change log
 
