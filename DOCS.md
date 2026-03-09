@@ -1,13 +1,13 @@
 ## Table of Contents
 
-1. [Getting Started](#doc-docs-readme) (`docs/README.md`)
-2. [Basic Usage](#doc-docs-basic-usage) (`docs/basic-usage.md`)
-3. [Contexts and Boundaries](#doc-docs-contexts-and-boundaries) (`docs/contexts-and-boundaries.md`)
-4. [Environments](#doc-docs-environments) (`docs/environments.md`)
-5. [Transition History](#doc-docs-transition-history) (`docs/transition-history.md`)
-6. [State Machines](#doc-docs-state-machines) (`docs/state-machines.md`)
-7. [Advanced Usage](#doc-docs-advanced-usage) (`docs/advanced-usage.md`)
-8. [Configuration](#doc-docs-configuration) (`docs/configuration.md`)
+1. [Getting Started](#doc-docs-readme)
+2. [Basic Usage](#doc-docs-basic-usage)
+3. [Contexts and Boundaries](#doc-docs-contexts-and-boundaries)
+4. [Environments](#doc-docs-environments)
+5. [Transition History](#doc-docs-transition-history)
+6. [State Machines](#doc-docs-state-machines)
+7. [Advanced Usage](#doc-docs-advanced-usage)
+8. [Configuration](#doc-docs-configuration)
 <a id="doc-docs-readme"></a>
 
 A flexible state management package for Laravel that allows any model or object to have multiple states with full transition history, context isolation, and environment support.
